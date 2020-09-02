@@ -530,6 +530,11 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 
 				// Invoke factory processors registered as beans in the context.调用上下文中注册为bean的工厂处理器。
 				// 完成bean工厂的扫描 和parse 解析 （类 -> beanDefintion）
+				/**
+				 * 1.执行bean工厂后置处理器
+				 * 2.解析类为beanDefinition对象 ， 并且put到beanDefinitionMaps中
+				 * 3.再次执行bean工厂后置处理器，完成cglib代理
+				 */
 				invokeBeanFactoryPostProcessors(beanFactory);
 
 				// Register bean processors that intercept bean creation.
@@ -548,7 +553,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 				registerListeners();
 
 				// Instantiate all remaining (non-lazy-init) singletons. 实例化所有剩余的(非延迟-init)单例。
-				// 开始实例化单例的类  validate 和 life
+				// 开始实例化bean单例的类  validate 和 life
 				finishBeanFactoryInitialization(beanFactory);
 
 				// Last step: publish corresponding event.
